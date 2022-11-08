@@ -1,0 +1,76 @@
+package u9urturk.carpetwashing.io.business.concretes;
+
+
+import java.util.Date;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import u9urturk.carpetwashing.io.business.abstracts.ImageService;
+import u9urturk.carpetwashing.io.core.utilities.imageservice.UploadImageService;
+import u9urturk.carpetwashing.io.core.utilities.results.DataResult;
+import u9urturk.carpetwashing.io.core.utilities.results.ErrorResult;
+import u9urturk.carpetwashing.io.core.utilities.results.Result;
+import u9urturk.carpetwashing.io.core.utilities.results.SuccessDataResult;
+import u9urturk.carpetwashing.io.core.utilities.results.SuccessResult;
+import u9urturk.carpetwashing.io.dataAccess.abstracts.ImageDao;
+import u9urturk.carpetwashing.io.entities.concretes.image;
+import u9urturk.carpetwashing.io.entities.concretes.dtos.ImageWithUserDto;
+
+@Service
+public class ImageManager implements ImageService {
+	
+	private ImageDao dao;
+	private UploadImageService imageService;
+	
+	@Autowired
+	public ImageManager(ImageDao imageDao ,UploadImageService imageService) {
+		super();
+		this.dao = imageDao;
+		this.imageService = imageService;
+	}
+	@Override
+	public Result add(MultipartFile file) throws Exception {
+		
+		
+			String url = this.imageService.uploadImage(file);
+			if(!url.isEmpty()) {
+				image image = new image();
+				image.setUserId(1);
+				image.setUrl(url);
+				image.setAddDate(new Date());
+				this.dao.save(image);
+				return new SuccessResult("Görsel eklendi.");
+			}
+		
+		
+		
+		return new ErrorResult("Yüklemek istenen görsel uygun değildir.");
+	}
+
+	@Override
+	public Result delete(image image) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Result update(image image) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public DataResult<List<image>> getAll() {
+		return new SuccessDataResult<List<image>>(this.dao.findAll(), "Veri getirildi.");
+	}
+	
+	@Override
+	public DataResult<List<ImageWithUserDto>> getAllImageDetails(){
+		return new SuccessDataResult<List<ImageWithUserDto>>(this.dao.getAllImageDetails(), "Detay bilgi getirildi.");
+	}
+	
+
+}
