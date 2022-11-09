@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import u9urturk.carpetwashing.io.business.abstracts.UserService;
+import u9urturk.carpetwashing.io.core.utilities.results.DataResult;
+import u9urturk.carpetwashing.io.core.utilities.results.ErrorResult;
 import u9urturk.carpetwashing.io.core.utilities.results.Result;
 import u9urturk.carpetwashing.io.core.utilities.results.SuccessDataResult;
 import u9urturk.carpetwashing.io.core.utilities.results.SuccessResult;
@@ -36,14 +38,20 @@ public class UserManager implements UserService{
 
 	@Override
 	public Result delete(User user) {
-		// TODO Auto-generated method stub
-		return null;
+		this.dao.delete(user);
+		return new SuccessResult("Kullanıcı silindi");
 	}
 
 	@Override
 	public Result update(User user) {
-		// TODO Auto-generated method stub
-		return null;
+		this.dao.save(user);
+		return new SuccessResult("Güncellendi.");
+	}
+
+	@Override
+	public DataResult<User> findByEmail(String email) {
+		
+		return new SuccessDataResult<User>(this.dao.findByEmail(email), "Veri maile göre getirildi.");
 	}
 
 }

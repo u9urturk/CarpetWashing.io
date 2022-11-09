@@ -13,4 +13,6 @@ public interface UserService {
 	Result update(User user);
 	
 	DataResult<List<User>> getAll();
+	
+	DataResult<User>findByEmail(String email);
 }
