@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 import u9urturk.carpetwashing.io.business.abstracts.UserService;
 import u9urturk.carpetwashing.io.core.utilities.results.DataResult;
-import u9urturk.carpetwashing.io.core.utilities.results.ErrorResult;
 import u9urturk.carpetwashing.io.core.utilities.results.Result;
 import u9urturk.carpetwashing.io.core.utilities.results.SuccessDataResult;
 import u9urturk.carpetwashing.io.core.utilities.results.SuccessResult;

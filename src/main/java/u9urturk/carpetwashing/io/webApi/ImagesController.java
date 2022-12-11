@@ -4,6 +4,7 @@ package u9urturk.carpetwashing.io.webApi;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +20,7 @@ import u9urturk.carpetwashing.io.entities.concretes.dtos.ImageWithUserDto;
 
 @RestController
 @RequestMapping("/api/images")
+@CrossOrigin
 public class ImagesController  {
 	
 	private ImageService imageService;
@@ -39,6 +41,16 @@ public class ImagesController  {
 		
 	}
 	
+	@PostMapping("/update")
+	public Result update(@RequestParam("File") MultipartFile file , int id) throws Exception {
+		return this.imageService.update(file , id);
+	}
+	
+	@PostMapping("/delete")
+	public Result delete( image image) {
+		return this.imageService.delete(image);
+	}
+	
 	@GetMapping("/getalldetails")
 	public DataResult<List<ImageWithUserDto>> getAllDetails(){
 		return this.imageService.getAllImageDetails();
@@ -48,6 +60,9 @@ public class ImagesController  {
 	public DataResult<List<image>> getAll(){
 		return this.imageService.getAll();
 	}
+	
+	
+	
 	
 	
 	

@@ -17,4 +17,10 @@ public interface ImageDao extends JpaRepository<image, Integer> {
 			+"From User u Inner Join image i on u.id = i.userId"
 			)
 	List<ImageWithUserDto> getAllImageDetails();
+	
+	image findByUserId(int userId);
+	
+	image findById(int id);
+	
+	
 }

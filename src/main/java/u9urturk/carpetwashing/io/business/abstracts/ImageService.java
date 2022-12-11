@@ -13,11 +13,12 @@ public interface ImageService {
 	
 	Result add(MultipartFile myFile) throws Exception;
 	Result delete(image image);
-	Result update(image image);
+	
 	
 	
 	DataResult<List<image>> getAll();
 	DataResult<List<ImageWithUserDto>> getAllImageDetails();
+	Result update(MultipartFile file, int id) throws Exception;
 	
 
 }

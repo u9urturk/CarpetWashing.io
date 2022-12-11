@@ -33,12 +33,12 @@ public class ImageManager implements ImageService {
 	}
 	@Override
 	public Result add(MultipartFile file) throws Exception {
-		
+		 
 		
 			String url = this.imageService.uploadImage(file);
 			if(!url.isEmpty()) {
 				image image = new image();
-				image.setUserId(1);
+				image.setUserId(2);
 				image.setUrl(url);
 				image.setAddDate(new Date());
 				this.dao.save(image);
@@ -49,18 +49,31 @@ public class ImageManager implements ImageService {
 		
 		return new ErrorResult("Yüklemek istenen görsel uygun değildir.");
 	}
+	
+	@Override
+	public Result update(MultipartFile file , int id ) throws Exception {
+		
+		String url = this.imageService.uploadImage(file);
+		if(!url.isEmpty()) {
+			image image = this.dao.findById(id);
+			image.setUrl(url);
+			this.dao.save(image);
+			return new SuccessResult("Görsel eklendi.");
+		}
+	
+	
+	
+	return new ErrorResult("Yüklemek istenen görsel uygun değildir.");
+	}
+	
 
 	@Override
 	public Result delete(image image) {
-		// TODO Auto-generated method stub
-		return null;
+		this.dao.delete(image);
+		return new SuccessResult("Başarıyla silindi");
 	}
 
-	@Override
-	public Result update(image image) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 
 	@Override
 	public DataResult<List<image>> getAll() {
@@ -71,6 +84,6 @@ public class ImageManager implements ImageService {
 	public DataResult<List<ImageWithUserDto>> getAllImageDetails(){
 		return new SuccessDataResult<List<ImageWithUserDto>>(this.dao.getAllImageDetails(), "Detay bilgi getirildi.");
 	}
-	
+
 
 }
