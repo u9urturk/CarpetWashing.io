@@ -29,8 +29,9 @@ public class CustomersController {
 	
 	@PostMapping("/add")
 	public Result add(@RequestBody Customer customer) {
-		
-		return this.customerService.add(customer);
+		System.out.println(customer);
+		return null;
+		//return this.customerService.add(customer);
 	}
 	
 	@GetMapping("/getall")

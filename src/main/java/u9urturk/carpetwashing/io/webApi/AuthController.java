@@ -22,16 +22,17 @@ import u9urturk.carpetwashing.io.entities.concretes.dtos.LoginWithUserDto;
 @RequiredArgsConstructor
 public class AuthController {
 	
-	private final AuthenticationManager authenticationManager;
 	private final UserDetailsService userDetailsService;
 	private final JwtUtils jwtUtils;
-	
+	private final AuthenticationManager authenticationManager;
+
 	
 	
 	
 	@PostMapping("/authenticate")
 	public ResponseEntity<String> authenticate(@RequestBody LoginWithUserDto request){
 		
+
 		authenticationManager.authenticate(
 			new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
 		

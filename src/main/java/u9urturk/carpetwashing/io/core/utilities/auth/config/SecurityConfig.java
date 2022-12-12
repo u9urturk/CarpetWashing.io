@@ -4,6 +4,7 @@ import java.util.Collections;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -20,8 +21,6 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.stereotype.Service;
-
 
 import lombok.RequiredArgsConstructor;
 import u9urturk.carpetwashing.io.dataAccess.abstracts.UserDao;
@@ -29,7 +28,7 @@ import u9urturk.carpetwashing.io.dataAccess.abstracts.UserDao;
 @Configuration
 @RequiredArgsConstructor
 @EnableWebSecurity
-@EnableMethodSecurity
+@EnableMethodSecurity(jsr250Enabled = true)
 public class SecurityConfig {
 	
 	private final JwtAthFilter jwtAuthFilter;
@@ -38,12 +37,12 @@ public class SecurityConfig {
 	
 	@Bean
 	SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-		
+		//System.out.println("40 ! ");
 			http
 				.csrf().disable()
 				.authorizeRequests()
-				.antMatchers("/**/auth/**")
-				.permitAll()
+				.antMatchers("/**/auth/**").permitAll()
+				.antMatchers("/api/images/getalldetails").hasRole("USER")
 				.anyRequest()
 				.authenticated()
 				.and()
@@ -64,6 +63,7 @@ public class SecurityConfig {
 	@Bean
 	public AuthenticationProvider authenticationProvider() {
 		
+		//System.out.println("66.satır çalıştı");
 		final DaoAuthenticationProvider authenticationProvider  = new DaoAuthenticationProvider();
 		authenticationProvider.setUserDetailsService(userDetailsService());
 		authenticationProvider.setPasswordEncoder(passwordEncoder());
@@ -73,6 +73,7 @@ public class SecurityConfig {
 	
 	@Bean
 	public AuthenticationManager authenticationManager(AuthenticationConfiguration configure) throws Exception {
+		//System.out.println("75.satır çalıştı");
 		return configure.getAuthenticationManager();
 	}
 	
@@ -86,13 +87,14 @@ public class SecurityConfig {
 	
 	@Bean
 	public UserDetailsService userDetailsService() {
+		//System.out.println("88.satır çalıştı");
 		return new UserDetailsService() {
 			@Override
 			public UserDetails loadUserByUsername(String email) {
 				User userD = new User(
 						userDao.findByEmail(email).getEmail(),
 						userDao.findByEmail(email).getPassword(),
-						Collections.singleton(new SimpleGrantedAuthority("ROLE_ADMIN"))
+						Collections.singleton(new SimpleGrantedAuthority("USER"))
 						);
 				
 				return userD;

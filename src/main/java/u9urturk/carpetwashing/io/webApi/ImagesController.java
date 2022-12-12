@@ -3,6 +3,8 @@ package u9urturk.carpetwashing.io.webApi;
 
 import java.util.List;
 
+import javax.annotation.security.RolesAllowed;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.cloudinary.provisioning.Account.Role;
 
 import u9urturk.carpetwashing.io.business.abstracts.ImageService;
 import u9urturk.carpetwashing.io.core.utilities.results.DataResult;
@@ -51,6 +55,7 @@ public class ImagesController  {
 		return this.imageService.delete(image);
 	}
 	
+	//@RolesAllowed("ROLE_USER")
 	@GetMapping("/getalldetails")
 	public DataResult<List<ImageWithUserDto>> getAllDetails(){
 		return this.imageService.getAllImageDetails();
