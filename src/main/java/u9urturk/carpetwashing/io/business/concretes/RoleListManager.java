@@ -48,7 +48,12 @@ public class RoleListManager implements RoleListService {
 
 	@Override
 	public DataResult<List<RoleListWithUserAndRoleDto>> getAllDetails() {
-		return new SuccessDataResult<List<RoleListWithUserAndRoleDto>>(this.roleListDao.getAllDetails(), "Detail bilgisi");
+		return new SuccessDataResult<List<RoleListWithUserAndRoleDto>>(this.roleListDao.getAllDetails(), "Detay bilgisi");
+	}
+	
+	@Override
+	public DataResult<RoleListWithUserAndRoleDto> getDetailByEmail(String email) {
+		return new SuccessDataResult<RoleListWithUserAndRoleDto>(this.roleListDao.getDetailsByEmail(email), "Detay bilgisi");
 	}
 
 }

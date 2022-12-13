@@ -16,4 +16,13 @@ public interface RoleListDao extends JpaRepository<RoleList, Integer> {
 			+"From RoleList rl  Join User u On rl.userId = u.id Join Role r On rl.roleId = r.id"
 			)
 	public List<RoleListWithUserAndRoleDto> getAllDetails();
+	
+	
+	
+	@Query(
+			"Select new u9urturk.carpetwashing.io.entities.concretes.dtos.RoleListWithUserAndRoleDto"
+			+ "(u.id,r.id,u.email,r.role)"
+			+"From RoleList rl  Join User u On rl.userId = u.id Join Role r On rl.roleId = r.id Where u.email =:email"
+			)
+	public RoleListWithUserAndRoleDto getDetailsByEmail(String email);
 }

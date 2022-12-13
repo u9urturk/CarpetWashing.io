@@ -17,4 +17,5 @@ public interface RoleListService {
 	DataResult<List<RoleList>> getAll();
 	
 	DataResult<List<RoleListWithUserAndRoleDto>> getAllDetails();
+	DataResult<RoleListWithUserAndRoleDto> getDetailByEmail(String email);
 }

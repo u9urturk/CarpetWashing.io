@@ -23,7 +23,9 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import lombok.RequiredArgsConstructor;
+import u9urturk.carpetwashing.io.dataAccess.abstracts.RoleListDao;
 import u9urturk.carpetwashing.io.dataAccess.abstracts.UserDao;
+import u9urturk.carpetwashing.io.entities.concretes.dtos.RoleListWithUserAndRoleDto;
 
 @Configuration
 @RequiredArgsConstructor
@@ -33,6 +35,7 @@ public class SecurityConfig {
 	
 	private final JwtAthFilter jwtAuthFilter;
 	private final UserDao userDao;
+	private final RoleListDao roleListDao;
 
 	
 	@Bean
@@ -85,16 +88,20 @@ public class SecurityConfig {
 	}
 	
 	
-	@Bean
+	@Bean 
 	public UserDetailsService userDetailsService() {
+		
 		//System.out.println("88.satır çalıştı");
 		return new UserDetailsService() {
+			
 			@Override
 			public UserDetails loadUserByUsername(String email) {
+				
+				
 				User userD = new User(
 						userDao.findByEmail(email).getEmail(),
 						userDao.findByEmail(email).getPassword(),
-						Collections.singleton(new SimpleGrantedAuthority("USER"))
+						Collections.singleton(new SimpleGrantedAuthority(roleListDao.getDetailsByEmail(email).getRole()))
 						);
 				
 				return userD;

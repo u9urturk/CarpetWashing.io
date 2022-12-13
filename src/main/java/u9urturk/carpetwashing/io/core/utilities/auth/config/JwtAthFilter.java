@@ -19,7 +19,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import lombok.RequiredArgsConstructor;
+import u9urturk.carpetwashing.io.dataAccess.abstracts.RoleListDao;
 import u9urturk.carpetwashing.io.dataAccess.abstracts.UserDao;
+import u9urturk.carpetwashing.io.entities.concretes.dtos.RoleListWithUserAndRoleDto;
 
 
 
@@ -31,6 +33,7 @@ public class JwtAthFilter  extends OncePerRequestFilter {
 	
 	private final UserDao userDao;
 	private final JwtUtils jwtUtils;
+	private final RoleListDao roleListDao;
 	
 	
 	@Override
@@ -51,13 +54,14 @@ public class JwtAthFilter  extends OncePerRequestFilter {
 		
 		jwtToken = authHeader.substring(7);
 		userEmail =jwtUtils.extractUsername(jwtToken);
+		//RoleListWithUserAndRoleDto roleList= (RoleListWithUserAndRoleDto) roleListDao.getDetailsByEmail(userEmail);
+		//System.out.println(roleList.getRole().toString());
 		if(userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-			
-			
+
 			User userD = new User(
 					userDao.findByEmail(userEmail).getEmail(),
 					userDao.findByEmail(userEmail).getPassword(),
-					Collections.singleton(new SimpleGrantedAuthority("ROLE_USER"))
+					Collections.singleton(new SimpleGrantedAuthority(roleListDao.getDetailsByEmail(userEmail).getRole()))
 					
 					);
 			

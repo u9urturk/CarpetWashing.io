@@ -7,4 +7,10 @@ import u9urturk.carpetwashing.io.entities.concretes.User;
 public interface UserDao extends JpaRepository<User, Integer> {
 	
 	User findByEmail(String email);
+	
+	
+	
+	
+		
+	
 }
