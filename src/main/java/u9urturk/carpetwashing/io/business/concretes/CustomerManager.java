@@ -2,6 +2,8 @@ package u9urturk.carpetwashing.io.business.concretes;
 
 import java.util.List;
 
+import javax.annotation.security.RolesAllowed;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,20 +25,23 @@ public class CustomerManager implements CustomerService{
 		super();
 		this.customerDao = customerDao;
 	}
-
+	
+	@RolesAllowed({"ADMIN","USER"})
 	@Override
 	public Result add(Customer customer) {
 	 this.customerDao.save(customer);
 	 return new SuccessResult("Veri eklendi.");
 		
 	}
-
+	
+	@RolesAllowed({"ADMIN"})
 	@Override
 	public Result delete(Customer customer) {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	
+	@RolesAllowed({"ADMIN"})
 	@Override
 	public Result update(Customer customer) {
 		// TODO Auto-generated method stub

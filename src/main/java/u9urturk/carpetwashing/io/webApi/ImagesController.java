@@ -39,27 +39,30 @@ public class ImagesController  {
 	
 	
 	@PostMapping("/add")
-	public Result add (@RequestParam("File") MultipartFile file) throws Exception {
+	public Result add (@RequestParam("File") MultipartFile file,int userId,int commentId) throws Exception {
 		
-		return this.imageService.add(file);
+		return this.imageService.add(file,userId,commentId);
 		
 	}
+	
 	
 	@PostMapping("/update")
 	public Result update(@RequestParam("File") MultipartFile file , int id) throws Exception {
 		return this.imageService.update(file , id);
 	}
 	
+	
+	
 	@PostMapping("/delete")
 	public Result delete( image image) {
 		return this.imageService.delete(image);
 	}
 	
-	//@RolesAllowed("ROLE_USER")
 	@GetMapping("/getalldetails")
 	public DataResult<List<ImageWithUserDto>> getAllDetails(){
 		return this.imageService.getAllImageDetails();
 	}
+	
 	
 	@GetMapping("/getall")
 	public DataResult<List<image>> getAll(){

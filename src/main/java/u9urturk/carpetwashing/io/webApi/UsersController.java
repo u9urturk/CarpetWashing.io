@@ -4,12 +4,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.security.RolesAllowed;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -70,6 +71,7 @@ public class UsersController {
 		return errors;
 	}
 	
+	@RolesAllowed({"USER","ADMIN"})
 	@PostMapping("/update")
 	public Result update(@RequestBody User user) {
 		return this.service.update(user);

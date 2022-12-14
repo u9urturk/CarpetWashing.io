@@ -2,6 +2,8 @@ package u9urturk.carpetwashing.io.business.concretes;
 
 import java.util.List;
 
+import javax.annotation.security.RolesAllowed;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,19 +26,22 @@ public class CommentManager implements CommentService {
 		super();
 		this.commentDao = commentDao;
 	}
-
+	
+	@RolesAllowed({"ADMIN","USER"})
 	@Override
 	public Result add(Comment comment) {
 		this.commentDao.save(comment);
 		return new SuccessResult("veri eklendi");
 	}
-
+	
+	@RolesAllowed({"ADMIN","USER"})
 	@Override
 	public Result delete(Comment comment) {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	
+	@RolesAllowed({"ADMIN","USER"})
 	@Override
 	public Result update(Comment comment) {
 		// TODO Auto-generated method stub

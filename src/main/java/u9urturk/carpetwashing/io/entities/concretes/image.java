@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.springframework.lang.Nullable;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -27,11 +29,20 @@ public class image {
 	@Column(name="user_id")
 	private int userId;
 	
+	@Nullable
+	@Column(name="comment_id")
+	private int commentId;
+	
+	
 	@Column(name="url")
 	private String url;
 	
 	@Column(name="add_date")
 	private Date addDate;
+
+	
+	
+	
 
 	
 }

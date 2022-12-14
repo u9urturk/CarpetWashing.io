@@ -4,6 +4,8 @@ package u9urturk.carpetwashing.io.business.concretes;
 import java.util.Date;
 import java.util.List;
 
+import javax.annotation.security.RolesAllowed;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -31,14 +33,17 @@ public class ImageManager implements ImageService {
 		this.dao = imageDao;
 		this.imageService = imageService;
 	}
+	
+	@RolesAllowed({"ADMIN","USER"})
 	@Override
-	public Result add(MultipartFile file) throws Exception {
+	public Result add(MultipartFile file , int userId , int commentId) throws Exception {
 		 
 		
 			String url = this.imageService.uploadImage(file);
 			if(!url.isEmpty()) {
 				image image = new image();
-				image.setUserId(2);
+				image.setUserId(userId);
+				image.setCommentId(commentId);
 				image.setUrl(url);
 				image.setAddDate(new Date());
 				this.dao.save(image);
@@ -50,6 +55,7 @@ public class ImageManager implements ImageService {
 		return new ErrorResult("Yüklemek istenen görsel uygun değildir.");
 	}
 	
+	@RolesAllowed({"ADMIN","USER"})
 	@Override
 	public Result update(MultipartFile file , int id ) throws Exception {
 		
@@ -67,6 +73,7 @@ public class ImageManager implements ImageService {
 	}
 	
 
+	@RolesAllowed({"ADMIN","USER"})
 	@Override
 	public Result delete(image image) {
 		this.dao.delete(image);

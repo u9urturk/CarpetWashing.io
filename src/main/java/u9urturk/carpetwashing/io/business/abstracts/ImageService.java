@@ -11,7 +11,7 @@ import u9urturk.carpetwashing.io.entities.concretes.dtos.ImageWithUserDto;
 
 public interface ImageService {
 	
-	Result add(MultipartFile myFile) throws Exception;
+	Result add(MultipartFile myFile , int userId , int commentId) throws Exception;
 	Result delete(image image);
 	
 	

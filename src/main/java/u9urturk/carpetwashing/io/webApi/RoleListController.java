@@ -38,7 +38,6 @@ public class RoleListController {
 		return this.roleListService.getAll();
 	}
 	
-	@RolesAllowed("ADMIN")
 	@GetMapping("getalldetails")
 	public DataResult<List<RoleListWithUserAndRoleDto>>getDetails(){
 		return this.roleListService.getAllDetails();

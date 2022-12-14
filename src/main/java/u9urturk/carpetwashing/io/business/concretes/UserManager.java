@@ -2,6 +2,8 @@ package u9urturk.carpetwashing.io.business.concretes;
 
 import java.util.List;
 
+import javax.annotation.security.RolesAllowed;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,30 +25,35 @@ public class UserManager implements UserService{
 		super();
 		this.dao = dao;
 	}
-
+	
+	@RolesAllowed({"ADMIN","USER"})
 	@Override
 	public Result add(User user) {
 		this.dao.save(user);
 		return new 	SuccessResult("Veri eklendi.");
 	}
-
+	
+	
 	@Override
 	public SuccessDataResult<List<User>> getAll() {
 		return new SuccessDataResult<List<User>>(this.dao.findAll(), "Veri getirildi.");
 	}
-
+	
+	@RolesAllowed({"ADMIN","USER"})
 	@Override
 	public Result delete(User user) {
 		this.dao.delete(user);
 		return new SuccessResult("Kullanıcı silindi");
 	}
-
+	
+	@RolesAllowed({"ADMIN","USER"})
 	@Override
 	public Result update(User user) {
 		this.dao.save(user);
 		return new SuccessResult("Güncellendi.");
 	}
-
+	
+	
 	@Override
 	public DataResult<User> findByEmail(String email) {
 		

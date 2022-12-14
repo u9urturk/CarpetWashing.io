@@ -2,6 +2,8 @@ package u9urturk.carpetwashing.io.business.concretes;
 
 import java.util.List;
 
+import javax.annotation.security.RolesAllowed;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,18 +25,22 @@ public class RoleListManager implements RoleListService {
 	@Autowired
 	private RoleListDao roleListDao;
 	
+	
+	@RolesAllowed({"ADMIN","USER"})
 	@Override
 	public Result add(RoleList roleList) {
 		this.roleListDao.save(roleList);
 		return new SuccessResult("Başarılı");
 	}
-
+	
+	@RolesAllowed({"ADMIN"})
 	@Override
 	public Result delete(RoleList roleList) {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	
+	@RolesAllowed({"ADMIN"})
 	@Override
 	public Result update(RoleList roleList) {
 		// TODO Auto-generated method stub

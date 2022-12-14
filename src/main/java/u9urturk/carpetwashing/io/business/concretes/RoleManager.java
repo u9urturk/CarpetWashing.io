@@ -2,7 +2,7 @@ package u9urturk.carpetwashing.io.business.concretes;
 
 import java.util.List;
 
-
+import javax.annotation.security.RolesAllowed;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,7 +28,7 @@ public class RoleManager implements RoleService {
 	}
 
 	
-
+	@RolesAllowed({"ADMIN"})
 	@Override
 	public Result add(Role role) {
 		this.roleDao.save(role);
@@ -42,7 +42,7 @@ public class RoleManager implements RoleService {
 	}
 
 
-
+	
 	@Override
 	public DataResult<List<Role>> getAll() {
 		return new SuccessDataResult<List<Role>>(this.roleDao.findAll());

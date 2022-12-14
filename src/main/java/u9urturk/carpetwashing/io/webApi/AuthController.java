@@ -32,13 +32,16 @@ public class AuthController {
 	@PostMapping("/authenticate")
 	public ResponseEntity<String> authenticate(@RequestBody LoginWithUserDto request){
 		
-
+		
 		authenticationManager.authenticate(
-			new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
+				
+		new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
 		
 		final UserDetails user  = userDetailsService.loadUserByUsername(request.getEmail());
 		
+		
 		if(user != null) {
+			
 			return ResponseEntity.ok( jwtUtils.generateToken(user));
 		}
 		
