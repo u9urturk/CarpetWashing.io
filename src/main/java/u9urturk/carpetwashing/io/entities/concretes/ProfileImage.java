@@ -1,6 +1,5 @@
 package u9urturk.carpetwashing.io.entities.concretes;
 
-import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,10 +14,10 @@ import lombok.NoArgsConstructor;
 
 @Entity
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-@Table(name="Comments")
-public class Comment {
+@NoArgsConstructor
+@Table(name="profile_images")
+public class ProfileImage {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,11 +27,8 @@ public class Comment {
 	@Column(name="user_id")
 	private int userId;
 	
-	@Column(name="add_date")
-	private Date addDate;
-	
-	@Column(name="comment")
-	private String comment;
+	@Column(name="imageUrl")
+	private String imageUrl;
 	
 	
 }

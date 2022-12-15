@@ -21,6 +21,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Table(name="images")
 public class image {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="id")
@@ -29,7 +30,6 @@ public class image {
 	@Column(name="user_id")
 	private int userId;
 	
-	@Nullable
 	@Column(name="comment_id")
 	private int commentId;
 	
