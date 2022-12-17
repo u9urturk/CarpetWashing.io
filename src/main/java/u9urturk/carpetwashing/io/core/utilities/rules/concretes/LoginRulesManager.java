@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
+import u9urturk.carpetwashing.io.core.utilities.results.ErrorResult;
 import u9urturk.carpetwashing.io.core.utilities.results.Result;
 import u9urturk.carpetwashing.io.core.utilities.results.SuccessResult;
 import u9urturk.carpetwashing.io.core.utilities.rules.abstracts.LoginRules;
@@ -25,17 +26,23 @@ public class LoginRulesManager implements LoginRules {
 			
 		}
 		
-		return null;
-	}
+		return new ErrorResult();
+	}  
 
 
 	@Override
 	public Result PasswordError(String email,String password) {
-		if(this.userDao.findByEmail(email)!=null &&this.userDao.findByEmail(email).getPassword() != password) {
-			return new SuccessResult("Parola hatalı");
+		boolean isEquels = false;
+		String getPassword = this.userDao.findByEmail(email).getPassword();
+		if(getPassword.equals(password) ) {
+			isEquels = true;
+			System.out.println(isEquels);
 		}
 		
-		return null;
+		if(this.userDao.findByEmail(email)!=null && isEquels == false ) {
+			return new SuccessResult("Parola hatalı");
+		}
+		return new ErrorResult();
 	}
 
 

@@ -12,6 +12,7 @@ import u9urturk.carpetwashing.io.business.abstracts.AuthService;
 import u9urturk.carpetwashing.io.core.utilities.auth.config.JwtUtils;
 import u9urturk.carpetwashing.io.core.utilities.results.DataResult;
 import u9urturk.carpetwashing.io.core.utilities.results.ErrorDataResult;
+import u9urturk.carpetwashing.io.core.utilities.results.ErrorResult;
 import u9urturk.carpetwashing.io.core.utilities.results.ErrorTokenResult;
 import u9urturk.carpetwashing.io.core.utilities.results.Result;
 import u9urturk.carpetwashing.io.core.utilities.results.SuccessDataResult;
@@ -43,19 +44,22 @@ public class AuthManager implements AuthService {
 	@Override
 	public TokenResult Login(LoginWithUserDto loginWithUserDto) {
 		
-		authenticationManager.authenticate(
-				
-				new UsernamePasswordAuthenticationToken(loginWithUserDto.getEmail(), loginWithUserDto.getPassword()));
-				final UserDetails userDetails = userDetailsService.loadUserByUsername(loginWithUserDto.getEmail());
-				if(userDetails !=null) {
+		if(loginRules.EmailNotFound(loginWithUserDto.getEmail()).isSuccess()) {
+			return new ErrorTokenResult( loginRules.EmailNotFound(loginWithUserDto.getEmail()).getMessage());
+		}else if(loginRules.PasswordError(loginWithUserDto.getEmail(), loginWithUserDto.getPassword()).isSuccess()) {
+			return new ErrorTokenResult(loginRules.PasswordError(loginWithUserDto.getEmail(), loginWithUserDto.getPassword()).getMessage());
+		}else {
+			authenticationManager.authenticate(
 					
-					return new SuccessTokenResult(jwtUtils.generateToken(userDetails), "Giriş başarılı");
-				}
-				
-			return	(TokenResult) loginRules.EmailNotFound(loginWithUserDto.getEmail());
-			//return	(TokenResult) loginRules.PasswordError(loginWithUserDto.getEmail(), loginWithUserDto.getPassword());
-				
-				
+					new UsernamePasswordAuthenticationToken(loginWithUserDto.getEmail(), loginWithUserDto.getPassword()));
+					final UserDetails userDetails = userDetailsService.loadUserByUsername(loginWithUserDto.getEmail());
+					if(userDetails !=null) {
+						
+						return new SuccessTokenResult(jwtUtils.generateToken(userDetails), "Giriş başarılı");
+					}
+		}
+		
+		return new ErrorTokenResult("Beklenmedik hata");
 
 	}
 
